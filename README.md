@@ -23,11 +23,17 @@ Zoom Clone using NodeJS, WebRTC and Websockets.
 ### nodemon
 * 디렉토리 내의 파일 변경을 감지하여 node 앱을 재시작함으로써 node.js 기반 앱 개발에 도움을 주는 도구
 * node 의 대체 wrapper 로, nodemon 을 사용하려면 cli 에서 node 라는 단어를 바꾸면 된다.
+* nodemon.json
+  * `"exec": "babel-node src/server.js"`
+  * 위 설정으로 인해, 서버를 재시작하는 대신 babel-node 를 src/server.js 대상으로 실행한다.
 
 ### babel
 * Javascript compiler
 * 현재 및 이전 브라우저 또는 환경에서 ECMAScript 2015+ 코드를 이전 버전의 Javascript 로 변환하는데 사용되는 toolchain
 * 문법 변환기를 통해 최신 버전의 Javascript 를 지원하고 JSX, Type Annotations 등의 기능도 지원한다.
+* babel.config.json
+  * `@babel/preset-env` 에서 정의한 위 부분은 대상 환경에 필요한 구문 변환을 세부적으로 관리할 필요 없이
+  * 최신 Javascript 를 사용할 수 있게 해주는 스마트한 사전 설정이다.
 
 ### Express
 * node.js 가장 인기 있는 프레임워크
