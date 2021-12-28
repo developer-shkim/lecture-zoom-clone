@@ -59,3 +59,11 @@ Zoom Clone using NodeJS, WebRTC and Websockets.
     - request 를 받지 않고도, "안녕?" 할 수 있다.
     - 브라우저와 서버는 서로에게 바로 갈 수 있는 길이 있다.
     - ex. 핸드폰과 Wi-Fi
+
+### backend 로 javascript object 아닌 string 을 전송하는 이유
+- 프로그래밍 언어에 의존하면 안 된다.
+- 연결하고 싶은 frontend, backend 서버가 어떤 언어로 만들어질지 모른다.
+- javascript object 로 만들어서 클라이언트 -> 서버로 보내게 되면
+- go 를 이용한 클라이언트에서는 서버에 접속할 수 없게 된다.
+- ex. websocket 이 브라우저에 있는 API 이므로 서버로 보낼 때에는 항상 string 으로 변환해야 한다.
+  - backend 에서는 다양한 프로그래밍 언어를 사용할 수 있으므로 어떠한 결정도 하면 안 된다.
