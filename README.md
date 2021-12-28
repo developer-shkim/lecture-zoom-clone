@@ -39,3 +39,23 @@ Zoom Clone using NodeJS, WebRTC and Websockets.
 * node.js 가장 인기 있는 프레임워크
 * HTTP request 에 대한 handler 를 만들고, response 하기 위해 view 의 rendering 엔진과 결합한다.
 * reqest handling pipeline 중 필요한 곳에 추가적인 미들웨어 처리 요청을 추가한다.
+
+## 21.12.28
+
+### HTTP vs WebSockets
+- HTTP
+  - stateless
+    - 사용자와 backend 간의 연결이 없다.
+    - request, response 과정 이후에 backend 는 사용자를 잊어버린다.
+    - 로그인 한 사용자를 구분하는 건 cookie 를 활용한다.
+    - 서버는 오직 request 를 받을 때에만 response 를 준다.
+  - real-time 으로 진행되지 않는다. 
+    - 사용자가 request 를 보내야 하고, 서버가 사용자에게 스스로 아무것도 못해준다.
+    - 서버가 사용자에게 "안녕?" 할 수 없다. 물어봐야 답할 수 있다.
+- WebSockets
+  - 양방향(bi-directional)
+    - connection 이 일어날 때는 악수를 하는 것과 같다. 한 번 하면 연결된다.
+    - 연결돼있으므로 서버는 사용자가 누군지 기억할 수 있고, 메시지를 보낼 수도 있다.
+    - request 를 받지 않고도, "안녕?" 할 수 있다.
+    - 브라우저와 서버는 서로에게 바로 갈 수 있는 길이 있다.
+    - ex. 핸드폰과 Wi-Fi
