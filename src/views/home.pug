@@ -11,9 +11,12 @@ html(lang="en")
     header  
       h1 Noom
     main
-        ul 
-        form
-          input(type="text", placeholder="writed a msg", required)
-          button Send
+      form#nick
+        input(type="text", placeholder="choose a nickname", required)
+        button Save
+      ul 
+      form#message
+        input(type="text", placeholder="writed a msg", required)
+        button Send
     script(src="/public/js/app.js")
     // import 
