@@ -29,5 +29,12 @@ const wss = new WebSocketServer({ server });
 // 꼭 http 서버 위에 만들 필요는 없다.
 // 이 프로젝트에서 http 가 지원하는 views, static files, home, redirection 을 사용하기 위함
 
+function handleConnection(socket) {
+  // server.js 의 socket 은 브라우저로의 연결을 의미
+  console.log(socket);
+}
+
+wss.on("connection", handleConnection);
+
 server.listen(3000, handleListen);
 // 2개의 프로토콜이 같은 port 를 공유
