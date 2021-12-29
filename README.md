@@ -67,3 +67,9 @@ Zoom Clone using NodeJS, WebRTC and Websockets.
 - go 를 이용한 클라이언트에서는 서버에 접속할 수 없게 된다.
 - ex. websocket 이 브라우저에 있는 API 이므로 서버로 보낼 때에는 항상 string 으로 변환해야 한다.
   - backend 에서는 다양한 프로그래밍 언어를 사용할 수 있으므로 어떠한 결정도 하면 안 된다.
+
+## 21.12.29
+### [SocketIO](https://socket.io/)
+- websocket 을 이용한 프레임워크, websocket 이 안 되면 HTTP long-polling 으로 한다.
+- 양방향, 실시간, 이벤트 기반으로 한다는 특징이 있다. 
+- websocket 으로 구현하는 것보다 SocketIO 로 하는 것이 쉽고, 신뢰성이 있고, 더 많은 기능을 제공한다.
