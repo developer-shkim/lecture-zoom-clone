@@ -1,5 +1,5 @@
 import http from "http";
-import { WebSocketServer } from "ws";
+import SocketIO from "socket.io"; 
 import express from "express";
 
 const app = express();
@@ -21,39 +21,43 @@ app.get("/", (req, res) => res.render("home"));
 
 const handleListen = () => console.log(`Listening on http://localhost:3000`);
 
-const server = http.createServer(app); 
+const httpServer = http.createServer(app);
 // http 서버 만듦
+const wsServer = SocketIO(httpServer);
 
-const wss = new WebSocketServer({ server });
+wsServer.on("connection", socket => {
+  console.log(socket);
+})
+
 // http 서버 위에 webSocket 서버 만듦
 // 꼭 http 서버 위에 만들 필요는 없다.
 // 이 프로젝트에서 http 가 지원하는 views, static files, home, redirection 을 사용하기 위함
 
-const sockets = [];
-// browser 배열 ex. [firefox, chrome]
+// const sockets = [];
+// // browser 배열 ex. [firefox, chrome]
 
-wss.on("connection", (socket) => {
-  // connection 이벤트에 대한 listener 와 같다.
-  // 위와 같이 작성함으로써 connection 이 생기면 socket 을 받는다는 걸 알아보기 쉽다.
-  sockets.push(socket);
-  socket["nickname"] = "익명";
+// wss.on("connection", (socket) => {
+//   // connection 이벤트에 대한 listener 와 같다.
+//   // 위와 같이 작성함으로써 connection 이 생기면 socket 을 받는다는 걸 알아보기 쉽다.
+//   sockets.push(socket);
+//   socket["nickname"] = "익명";
 
-  console.log("Connected to Browser ✅")
-  socket.on("close", () => console.log("Disconnected to Browser ❌"))
-  socket.on("message", msg => {
-    const message = JSON.parse(msg.toString());
+//   console.log("Connected to Browser ✅")
+//   socket.on("close", () => console.log("Disconnected to Browser ❌"))
+//   socket.on("message", msg => {
+//     const message = JSON.parse(msg.toString());
 
-    switch(message.type) {
-      case "new_message":
-        sockets.forEach(aSocket => aSocket.send(`${socket.nickname}: ${message.payload.toString()}`));
-        break;
-      case "nickname":
-        socket["nickname"] = message.payload.toString();
-        console.log(message.payload.toString());
-        break;
-    }
-  });
-});
+//     switch(message.type) {
+//       case "new_message":
+//         sockets.forEach(aSocket => aSocket.send(`${socket.nickname}: ${message.payload.toString()}`));
+//         break;
+//       case "nickname":
+//         socket["nickname"] = message.payload.toString();
+//         console.log(message.payload.toString());
+//         break;
+//     }
+//   });
+// });
 
-server.listen(3000, handleListen);
+httpServer.listen(3000, handleListen);
 // 2개의 프로토콜이 같은 port 를 공유
