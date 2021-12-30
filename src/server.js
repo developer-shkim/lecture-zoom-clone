@@ -26,7 +26,12 @@ const httpServer = http.createServer(app);
 const wsServer = SocketIO(httpServer);
 
 wsServer.on("connection", socket => {
-  console.log(socket);
+  socket.on("enter_room", (msg, done) => {
+    console.log(msg);
+    setTimeout(() => {
+      done();
+    }, 5000);
+  }); // messeage 대신 우리가 원하는 이벤트
 })
 
 // http 서버 위에 webSocket 서버 만듦
