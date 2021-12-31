@@ -33,6 +33,9 @@ wsServer.on("connection", socket => {
   socket.on("enter_room", (roomName, done) => {
     socket.join(roomName);
     done();
+    socket.to(roomName).emit("welcome");
+    // 나를 제외한 나머지 참여한 모두에게 메시지를 보낸다.
+
   }); // messeage 대신 우리가 원하는 이벤트
 })
 
