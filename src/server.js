@@ -26,10 +26,10 @@ const httpServer = http.createServer(app);
 const wsServer = SocketIO(httpServer);
 
 wsServer.on("connection", socket => {
-  socket.on("enter_room", (msg, done) => {
-    console.log(msg);
+  socket.on("enter_room", (roomName, done) => {
+    console.log(roomName);
     setTimeout(() => {
-      done();
+      done("hello from the backend");
     }, 5000);
   }); // messeage 대신 우리가 원하는 이벤트
 })
