@@ -35,8 +35,14 @@ wsServer.on("connection", socket => {
     done();
     socket.to(roomName).emit("welcome");
     // 나를 제외한 나머지 참여한 모두에게 메시지를 보낸다.
-
   }); // messeage 대신 우리가 원하는 이벤트
+  socket.on("disconnecting", () => {
+    socket.rooms.forEach(room => socket.to(room).emit("bye"));
+  });
+  socket.on("new_message", (msg, room, done) => {
+    socket.to(room).emit("new_message", msg);
+    done();
+  });
 })
 
 // http 서버 위에 webSocket 서버 만듦
