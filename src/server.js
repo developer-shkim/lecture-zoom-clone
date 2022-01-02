@@ -1,5 +1,5 @@
-import http from "http";
 import SocketIO from "socket.io"; 
+ import http from "http";
 import express from "express";
 
 const app = express();
@@ -24,6 +24,19 @@ const handleListen = () => console.log(`Listening on http://localhost:3000`);
 const httpServer = http.createServer(app);
 // http 서버 만듦
 const wsServer = SocketIO(httpServer);
+
+function publicRooms() {
+  const { sockets: { adapter: { sids, rooms }}} = wsServer;
+  const sids = wsServer.sockets.adapter.sids;
+  const rooms = wsServer.sockets.adapter.rooms;
+
+  rooms.forEach((_, key) => {
+    if (sids.get(key) === undefined) {
+      publicRooms.push(key);
+    }
+  });
+  return publicRooms;
+}
 
 wsServer.on("connection", socket => {
   // onAny 는 midleware 와 같다.
