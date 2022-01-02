@@ -63,6 +63,22 @@ socket.on("bye", (left) => {
   addMessage(`${left} leftㅠㅠ`);
 });
 
-socket.on("new_message", addMessage);
+socket.on("room_change", (rooms) => {
+  const roomList = welcome.querySelector("ul");
+  roomList.innerHTML = "";
+  if (rooms.length === 0) {
+    return;
+  }
+  // rooms 에 값이 들어와서 화면을 그리고
+  // 그 다음에 rooms 에 [] 로 들어오면 비어있으므로
+  // 화면을 다시 그리지 않는다. 
+  console.log(rooms);
+  
+  rooms.forEach(room => {
+    const li = document.createElement("li");
+    li.innerText = room;
+    roomList.append(li);
+  });
+});
 
 // backend 는 frontend 에서 오는 function 을 실행X (보안 문제 생길 수 있으므로)

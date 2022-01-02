@@ -27,9 +27,8 @@ const wsServer = SocketIO(httpServer);
 
 function publicRooms() {
   const { sockets: { adapter: { sids, rooms }}} = wsServer;
-  const sids = wsServer.sockets.adapter.sids;
-  const rooms = wsServer.sockets.adapter.rooms;
 
+  const publicRooms = [];
   rooms.forEach((_, key) => {
     if (sids.get(key) === undefined) {
       publicRooms.push(key);
@@ -47,11 +46,15 @@ wsServer.on("connection", socket => {
     socket.join(roomName);
     socket["nickname"] = nickname;
     done();
-    socket.to(roomName).emit("welcome", nickname);
+    socket.to(roomName).emit("welcome", nickname);  // 하나의 소켓에만
+    wsServer.sockets.emit("room_change", publicRooms());  // 모든 소켓에
     // 나를 제외한 나머지 참여한 모두에게 메시지를 보낸다.
   }); // messeage 대신 우리가 원하는 이벤트
   socket.on("disconnecting", () => {
     socket.rooms.forEach(room => socket.to(room).emit("bye", socket.nickname));
+  });
+  socket.on("disconnect", () => {
+    wsServer.sockets.emit("room_change", publicRooms());
   });
   socket.on("new_message", (msg, room, done) => {
     socket.to(room).emit("new_message", `${socket.nickname}: ${msg}`);
