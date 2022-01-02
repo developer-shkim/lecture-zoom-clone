@@ -37,6 +37,10 @@ function publicRooms() {
   return publicRooms;
 }
 
+function countRoom(roomName) {
+  return wsServer.sockets.adapter.rooms.get(roomName)?.size;
+}
+
 wsServer.on("connection", socket => {
   // onAny 는 midleware 와 같다.
   socket.onAny((event) => {
@@ -46,12 +50,12 @@ wsServer.on("connection", socket => {
     socket.join(roomName);
     socket["nickname"] = nickname;
     done();
-    socket.to(roomName).emit("welcome", nickname);  // 하나의 소켓에만
-    wsServer.sockets.emit("room_change", publicRooms());  // 모든 소켓에
+    socket.to(roomName).emit("welcome", nickname, countRoom(roomName));  // 하나의 소켓에만
+    wsServer.sockets.emit("room_change", publicRooms());  // 모든 소켓에 => broadcast
     // 나를 제외한 나머지 참여한 모두에게 메시지를 보낸다.
   }); // messeage 대신 우리가 원하는 이벤트
   socket.on("disconnecting", () => {
-    socket.rooms.forEach(room => socket.to(room).emit("bye", socket.nickname));
+    socket.rooms.forEach(room => socket.to(room).emit("bye", socket.nickname, countRoom(room) - 1));
   });
   socket.on("disconnect", () => {
     wsServer.sockets.emit("room_change", publicRooms());
