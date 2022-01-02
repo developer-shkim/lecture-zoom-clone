@@ -30,17 +30,18 @@ wsServer.on("connection", socket => {
   socket.onAny((event) => {
     console.log(`Socket Event: ${event}`);
   });
-  socket.on("enter_room", (roomName, done) => {
+  socket.on("enter_room", (roomName, nickname, done) => {
     socket.join(roomName);
+    socket["nickname"] = nickname;
     done();
-    socket.to(roomName).emit("welcome");
+    socket.to(roomName).emit("welcome", nickname);
     // 나를 제외한 나머지 참여한 모두에게 메시지를 보낸다.
   }); // messeage 대신 우리가 원하는 이벤트
   socket.on("disconnecting", () => {
-    socket.rooms.forEach(room => socket.to(room).emit("bye"));
+    socket.rooms.forEach(room => socket.to(room).emit("bye", socket.nickname));
   });
   socket.on("new_message", (msg, room, done) => {
-    socket.to(room).emit("new_message", msg);
+    socket.to(room).emit("new_message", `${socket.nickname}: ${msg}`);
     done();
   });
 })
