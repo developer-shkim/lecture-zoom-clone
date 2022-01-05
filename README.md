@@ -73,3 +73,16 @@ Zoom Clone using NodeJS, WebRTC and Websockets.
 - websocket 을 이용한 프레임워크, websocket 이 안 되면 HTTP long-polling 으로 한다.
 - 양방향, 실시간, 이벤트 기반으로 한다는 특징이 있다. 
 - websocket 으로 구현하는 것보다 SocketIO 로 하는 것이 쉽고, 신뢰성이 있고, 더 많은 기능을 제공한다.
+
+## 21.1.5
+### [WebRTC](https://developer.mozilla.org/ko/docs/Web/API/WebRTC_API)
+- Web Reala-Time Communication
+- Peer-to-Peer 로 데이터를 주고 받을 수 있다.
+- websocket 은 다른 websocket 에 전달하는 것이 아니라 서버에 전달하고 서버가 메시지를 보냈다.
+- 이와 달리, 직접 전달할 수 있다. 서버가 필요하지만 영상이나 오디오를 전달할 때는 필요하지 않다.
+- signaling 을 하기 위해 서버가 필요하다. sinaling 이 끝나면 P2P 연결 가능하다.
+- 서버가 필요한 이유
+  - 우리 브라우저로 하여금 서버가 상대의 위치를 알게 하는 것이다.
+  - 브라우저가 서버한테 configuration, 위치를 전달한다.
+  - 서버가 수신자의 위치를 알려주면 P2P 연결이 시작된다.
+- 우리가 P2P 연결을 할 건데, 서버를 사용해야 한 브라우저가 다른 브라우저가 어디있는지 알려줄 수 있다.
