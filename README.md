@@ -1,10 +1,10 @@
+> ⚠️ nomadcoders 의 줌 클론 코딩 강의를 기반으로 하는 프로젝트입니다.
+
 # Noom
 
 Zoom Clone using NodeJS, WebRTC and Websockets.
 
 # 배운 점
-
-## 21.12.27
 
 ### commands
 `npm init -y`
@@ -40,8 +40,6 @@ Zoom Clone using NodeJS, WebRTC and Websockets.
 * HTTP request 에 대한 handler 를 만들고, response 하기 위해 view 의 rendering 엔진과 결합한다.
 * reqest handling pipeline 중 필요한 곳에 추가적인 미들웨어 처리 요청을 추가한다.
 
-## 21.12.28
-
 ### HTTP vs WebSockets
 - HTTP
   - stateless
@@ -68,13 +66,11 @@ Zoom Clone using NodeJS, WebRTC and Websockets.
 - ex. websocket 이 브라우저에 있는 API 이므로 서버로 보낼 때에는 항상 string 으로 변환해야 한다.
   - backend 에서는 다양한 프로그래밍 언어를 사용할 수 있으므로 어떠한 결정도 하면 안 된다.
 
-## 21.12.29
 ### [SocketIO](https://socket.io/)
 - websocket 을 이용한 프레임워크, websocket 이 안 되면 HTTP long-polling 으로 한다.
 - 양방향, 실시간, 이벤트 기반으로 한다는 특징이 있다. 
 - websocket 으로 구현하는 것보다 SocketIO 로 하는 것이 쉽고, 신뢰성이 있고, 더 많은 기능을 제공한다.
 
-## 21.1.5
 ### [WebRTC](https://developer.mozilla.org/ko/docs/Web/API/WebRTC_API)
 - Web Reala-Time Communication
 - Peer-to-Peer 로 데이터를 주고 받을 수 있다.
@@ -86,3 +82,7 @@ Zoom Clone using NodeJS, WebRTC and Websockets.
   - 브라우저가 서버한테 configuration, 위치를 전달한다.
   - 서버가 수신자의 위치를 알려주면 P2P 연결이 시작된다.
 - 우리가 P2P 연결을 할 건데, 서버를 사용해야 한 브라우저가 다른 브라우저가 어디있는지 알려줄 수 있다.
+
+### [DataChannel](https://developer.mozilla.org/ko/docs/Web/API/RTCPeerConnection/createDataChannel)
+- `createDataChannel` 메소드로 데이터를 송신할 수 있는 채널을 생성한다.
+- webRTC 가 안 좋을 때, peer 가 2명밖에 없을 때는 속도가 느려질 수 있다.
